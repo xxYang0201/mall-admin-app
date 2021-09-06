@@ -9,6 +9,7 @@ export default new Vuex.Store({
     // 导航的收放状态 false为展开  true为收起来
     collapsed: false,
     user: getUserCookies(),
+    menuRoutes: [],
   },
   mutations: {
     changeCollapsed(state) {
@@ -25,6 +26,14 @@ export default new Vuex.Store({
         username: '',
       };
     },
+    changeMenuRoutes(state, routes) {
+      state.menuRoutes = routes.filter((r) => {
+        if (r.name === 'Login') {
+          return false;
+        }
+        return true;
+      });
+    },
   },
   actions: {
     changeCollapsed({ commit }) {
@@ -37,6 +46,9 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit('logout');
       removeUserCookies();
+    },
+    changeMenuRoutes({ commit }, routes) {
+      commit('changeMenuRoutes', routes);
     },
   },
   modules: {},
