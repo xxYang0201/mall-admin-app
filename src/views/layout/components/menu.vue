@@ -25,7 +25,10 @@
     </a-menu>
   </div>
 </template>
-
+<script>
+export default {
+};
+</script>
 <style lang="less">
 .menu-list {
   width: 200px;

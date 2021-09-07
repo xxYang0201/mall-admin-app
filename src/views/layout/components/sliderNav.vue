@@ -5,15 +5,19 @@
     </a-button>
     <div class="breadcrumb">
       <a-breadcrumb>
-        <a-breadcrumb-item>商品</a-breadcrumb-item>
+        <a-breadcrumb-item>{{
+          currentRoute[0] ? currentRoute[0].meta.title : ""
+        }}</a-breadcrumb-item>
         <a-breadcrumb-item>
-          <a href>商品列表</a>
+          <router-link :to="{name:currentRoute[1].name}">
+            {{ currentRoute[1] ? currentRoute[1].meta.title : "" }}
+          </router-link>
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <ul class="user-info">
       <li class="user-name">
-        {{$store.state.user.username}}
+        {{ $store.state.user.username }}
         <a-icon type="down" />
       </li>
       <li class="login-out" @click="logout">退出</li>
@@ -24,7 +28,27 @@
 export default {
   data() {
     return {
+      currentRoute: [
+        {
+          name: 'home',
+          meta: {
+            title: '首页',
+          },
+        },
+        {
+          name: 'Index',
+          meta: {
+            title: '统计',
+          },
+        },
+      ],
     };
+  },
+  watch: {
+    $route() {
+      console.log(this.$router);
+      this.currentRoute = this.$router.currentRoute.matched;
+    },
   },
   methods: {
     toggleCollapsed() {

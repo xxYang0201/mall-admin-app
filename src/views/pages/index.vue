@@ -1,13 +1,24 @@
 <template>
-  <div>首页二级</div>
+  <div class="index">
+    <div class="card">
+      <Card />
+    </div>
+    <div class="chart">
+      <Chart />
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
+import Card from '@/components/card.vue';
+import Chart from '@/components/chart.vue';
 
+export default {
+  components: {
+    Card, Chart,
+  },
 };
 </script>
 
 <style>
-
 </style>
