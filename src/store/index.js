@@ -10,8 +10,12 @@ export default new Vuex.Store({
     collapsed: false,
     user: getUserCookies(),
     menuRoutes: [],
+    form: {},
   },
   mutations: {
+    changeForm(state, data) {
+      state.form = data;
+    },
     changeCollapsed(state) {
       state.collapsed = !state.collapsed;
     },
@@ -28,10 +32,12 @@ export default new Vuex.Store({
     },
     changeMenuRoutes(state, routes) {
       state.menuRoutes = routes.filter((r) => {
-        if (r.name === 'Login') {
-          return false;
+        if (r.name !== 'Login') {
+          // const obj = r;
+          // obj.children = obj.children.filter((c) => c.name !== 'ProductEdit');
+          return true;
         }
-        return true;
+        return false;
       });
     },
   },
@@ -49,6 +55,9 @@ export default new Vuex.Store({
     },
     changeMenuRoutes({ commit }, routes) {
       commit('changeMenuRoutes', routes);
+    },
+    changeForm({ commit }, data) {
+      commit('changeForm', data);
     },
   },
   modules: {},

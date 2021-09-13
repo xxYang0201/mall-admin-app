@@ -46,7 +46,6 @@ export default {
   },
   watch: {
     $route() {
-      console.log(this.$router);
       this.currentRoute = this.$router.currentRoute.matched;
     },
   },

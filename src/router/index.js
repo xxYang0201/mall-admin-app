@@ -20,6 +20,7 @@ const ayncRouterMap = [{
     path: 'list',
     name: 'ProductList',
     icon: 'unordered-list',
+    show: true,
     meta: {
       title: '商品列表',
     },
@@ -29,6 +30,7 @@ const ayncRouterMap = [{
     path: 'add',
     name: 'ProductAdd',
     icon: 'folder-add',
+    show: true,
     meta: {
       title: '商品添加',
     },
@@ -38,10 +40,21 @@ const ayncRouterMap = [{
     path: 'category',
     name: 'Category',
     icon: 'setting',
+    show: true,
     meta: {
       title: '类目管理',
     },
     component: () => import('@/views/pages/category.vue'),
+  },
+  {
+    path: 'edit/:id',
+    name: 'ProductEdit',
+    icon: 'folder-add',
+    show: false,
+    meta: {
+      title: '商品编辑',
+    },
+    component: () => import('@/views/pages/productAdd.vue'),
   },
   ],
 
@@ -60,6 +73,7 @@ const routes = [{
     path: 'index',
     name: 'Index',
     icon: 'home',
+    show: true,
     meta: {
       title: '统计',
     },
@@ -81,16 +95,16 @@ const router = new VueRouter({
   routes,
 
 });
+console.log(ayncRouterMap);
 let isAddRoutes = false;
 router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
     if (store.state.user.appkey && store.state.user.username) {
       if (!isAddRoutes) {
-        const menuRoutes = getMenuRoute(store.state.user.role, ayncRouterMap);
-        store.dispatch('changeMenuRoutes', routes.concat(menuRoutes)).then(() => {
+        const menuRoute = getMenuRoute(store.state.user.role, ayncRouterMap);
+        store.dispatch('changeMenuRoutes', routes.concat(menuRoute)).then(() => {
           next();
-          console.log(menuRoutes);
-          router.addRoutes(menuRoutes);
+          router.addRoutes(menuRoute);
         });
         isAddRoutes = true;
       }
